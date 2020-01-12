@@ -59,13 +59,32 @@ class ViewController: UIViewController {
 
     @objc func letterTapped(_ sender: UIButton) {
         guard let buttonLetter = sender.titleLabel?.text else { return }
+        guard let hiddenWordLabelText = hiddenWordLabel.text else { return }
         guard let hiddenWord = hiddenWord else { return }
 
         sender.isEnabled = false
 
         if hiddenWord.contains(buttonLetter) {
-            //FIXME: Replace the ? with the letter in the right spot
+            var newGuessedWord = ""
 
+            for letter in hiddenWord {
+                if String(letter) == buttonLetter {
+                    // If the selected letter is in the hidden word, add that letter
+                    // to the new guessed word
+                    newGuessedWord.append(letter)
+                } else if hiddenWordLabelText.contains(letter) {
+                    // If the selected letter is already in the new guessed word, re-add
+                    // that letter to it
+                    newGuessedWord.append(letter)
+                } else {
+                    newGuessedWord.append("?")
+                }
+            }
+
+            // The newly built guessed word is assigned to the hidden word text label
+            hiddenWordLabel.text = newGuessedWord
+
+            // Checks to see if the player guessed all the letters
             if hiddenWord == hiddenWordLabel.text {
                 endGame(for: .victory)
             }
