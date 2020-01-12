@@ -134,10 +134,10 @@ class ViewController: UIViewController {
 
         if gameStatus == .victory {
             title = "You won!"
-            message = "You managed to guess the word before running out of tries"
+            message = "You managed to guess the word \"\(hiddenWord)\""
         } else {
             title = "Game over!"
-            message = "You ran out of tries to guess the word"
+            message = "You ran out of tries to guess the word \"\(hiddenWord)\""
         }
 
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
