@@ -17,6 +17,7 @@ class ViewController: UIViewController {
 
     // MARK: - Controller properties
 
+    var scoreLabel: UILabel!
     var imageView: UIImageView!
     var descriptionLabel1: UILabel!
     var descriptionLabel2: UILabel!
@@ -40,6 +41,12 @@ class ViewController: UIViewController {
     var amountGuessedIncorrectly = 0 {
         didSet {
             imageView.image = UIImage(named: "Hangman\(amountGuessedIncorrectly)")
+        }
+    }
+
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
         }
     }
 
@@ -121,11 +128,11 @@ class ViewController: UIViewController {
         }
     }
 
-    func endGame(for playerWon: GameStatus) {
+    func endGame(for gameStatus: GameStatus) {
         var title = ""
         var message = ""
 
-        if playerWon == GameStatus.victory {
+        if gameStatus == .victory {
             title = "You won!"
             message = "You managed to guess the word before running out of tries"
         } else {
@@ -136,8 +143,16 @@ class ViewController: UIViewController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let endGameAction = UIAlertAction(title: "Play again", style: .default) {
-            action in
-            self.loadGame()
+            [weak self] _ in
+
+            // Increments or decrements the score based on the game status
+            if gameStatus == .victory {
+                self?.score += 1
+            } else {
+                self?.score -= 1
+            }
+
+            self?.loadGame()
         }
 
         ac.addAction(endGameAction)
@@ -149,6 +164,12 @@ class ViewController: UIViewController {
 
 extension ViewController {
     func setupUserInterface() {
+        scoreLabel = UILabel()
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.text = "Score: 0"
+        scoreLabel.font = .boldSystemFont(ofSize: 20)
+        view.addSubview(scoreLabel)
+
         imageView = UIImageView(image: nil)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
@@ -198,7 +219,10 @@ extension ViewController {
 
     func constrainElements() {
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            imageView.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 50),
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 120),
             imageView.heightAnchor.constraint(equalToConstant: 200),
