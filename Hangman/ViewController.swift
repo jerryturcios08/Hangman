@@ -54,7 +54,7 @@ class ViewController: UIViewController {
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = AppColors.background
 
         setupUserInterface()
     }
