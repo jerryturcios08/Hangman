@@ -34,7 +34,8 @@ class ViewController: UIViewController {
         ["g", "n", "u", ""]
     ]
 
-    var hiddenWord: String?
+    var allWordsFromFile = [String]()
+    var hiddenWord = ""
 
     var amountGuessedIncorrectly = 0 {
         didSet {
@@ -47,11 +48,19 @@ class ViewController: UIViewController {
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
+
         setupUserInterface()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let file = Bundle.main.url(forResource: "words", withExtension: "txt") {
+            if let words = try? String(contentsOf: file) {
+                allWordsFromFile = words.components(separatedBy: "\n")
+            }
+        }
+
         loadGame()
     }
 
@@ -60,7 +69,6 @@ class ViewController: UIViewController {
     @objc func letterTapped(_ sender: UIButton) {
         guard let buttonLetter = sender.titleLabel?.text else { return }
         guard let hiddenWordLabelText = hiddenWordLabel.text else { return }
-        guard let hiddenWord = hiddenWord else { return }
 
         sender.isEnabled = false
 
@@ -98,9 +106,9 @@ class ViewController: UIViewController {
     }
 
     func loadGame() {
-        // Load new word from a text file
+        guard let randomWord = allWordsFromFile.randomElement() else { return }
 
-        hiddenWord = "hangman"
+        hiddenWord = randomWord
         hiddenWordLabel.text = ""
         amountGuessedIncorrectly = 0
 
@@ -108,7 +116,7 @@ class ViewController: UIViewController {
             button.isEnabled = true
         }
 
-        for _ in hiddenWord! {
+        for _ in hiddenWord {
             hiddenWordLabel.text?.append("?")
         }
     }

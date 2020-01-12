@@ -13,6 +13,7 @@
 		C6DA280D23CB8A0600598E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DA280B23CB8A0600598E38 /* Main.storyboard */; };
 		C6DA280F23CB8A0900598E38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6DA280E23CB8A0900598E38 /* Assets.xcassets */; };
 		C6DA281223CB8A0900598E38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DA281023CB8A0900598E38 /* LaunchScreen.storyboard */; };
+		C6DA281C23CBB0DD00598E38 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = C6DA281B23CBB0DD00598E38 /* words.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		C6DA280E23CB8A0900598E38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6DA281123CB8A0900598E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C6DA281323CB8A0900598E38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6DA281B23CBB0DD00598E38 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,12 +59,13 @@
 			isa = PBXGroup;
 			children = (
 				C6DA280523CB8A0600598E38 /* AppDelegate.swift */,
+				C6DA280E23CB8A0900598E38 /* Assets.xcassets */,
+				C6DA281323CB8A0900598E38 /* Info.plist */,
+				C6DA281023CB8A0900598E38 /* LaunchScreen.storyboard */,
+				C6DA280B23CB8A0600598E38 /* Main.storyboard */,
 				C6DA280723CB8A0600598E38 /* SceneDelegate.swift */,
 				C6DA280923CB8A0600598E38 /* ViewController.swift */,
-				C6DA280B23CB8A0600598E38 /* Main.storyboard */,
-				C6DA280E23CB8A0900598E38 /* Assets.xcassets */,
-				C6DA281023CB8A0900598E38 /* LaunchScreen.storyboard */,
-				C6DA281323CB8A0900598E38 /* Info.plist */,
+				C6DA281B23CBB0DD00598E38 /* words.txt */,
 			);
 			path = Hangman;
 			sourceTree = "<group>";
@@ -127,6 +130,7 @@
 			files = (
 				C6DA281223CB8A0900598E38 /* LaunchScreen.storyboard in Resources */,
 				C6DA280F23CB8A0900598E38 /* Assets.xcassets in Resources */,
+				C6DA281C23CBB0DD00598E38 /* words.txt in Resources */,
 				C6DA280D23CB8A0600598E38 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
