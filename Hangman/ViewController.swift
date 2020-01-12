@@ -218,6 +218,8 @@ extension ViewController {
     }
 
     func constrainElements() {
+        // FIXME: Layout issues on iPhone SE, iPhone 8, iPhone 8 plus and iPad devices
+
         NSLayoutConstraint.activate([
             scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
