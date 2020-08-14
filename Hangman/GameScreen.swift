@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  GameScreen.swift
 //  Hangman
 //
 //  Created by Jerry Turcios on 1/12/20.
@@ -13,7 +13,7 @@ enum GameStatus {
     case failure
 }
 
-class ViewController: UIViewController {
+class GameScreen: UIViewController {
 
     // MARK: - Controller properties
 
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = AppColors.background
+        view.backgroundColor = .systemBackground
 
         setupUserInterface()
     }
@@ -159,7 +159,7 @@ class ViewController: UIViewController {
 
 // MARK: - User interface code
 
-extension ViewController {
+extension GameScreen {
     func setupUserInterface() {
         scoreLabel = UILabel()
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
