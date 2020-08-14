@@ -194,83 +194,12 @@ extension ViewController {
         containerStackView.alignment = .center
         view.addSubview(containerStackView)
 
-        let width = 59
-        let height = 59
-
-        let firstRowStackView = UIStackView()
-        firstRowStackView.axis = .horizontal
-        firstRowStackView.distribution = .equalSpacing
-        firstRowStackView.spacing = 8
-
-        for letter in 0..<7 {
-            let button = UIButton(type: .system)
-            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-            button.setTitle(alphabetList[letter], for: .normal)
-            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
-
-            let frame = CGRect(x: 0, y: 0, width: width, height: height)
-            button.frame = frame
-
-            firstRowStackView.addArrangedSubview(button)
-            letterButtons.append(button)
-        }
-
-        let secondRowStackView = UIStackView()
-        secondRowStackView.axis = .horizontal
-        secondRowStackView.distribution = .equalSpacing
-        secondRowStackView.spacing = 8
-
-        for letter in 7..<14 {
-            let button = UIButton(type: .system)
-            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-            button.setTitle(alphabetList[letter], for: .normal)
-            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
-
-            let frame = CGRect(x: 0, y: 0, width: width, height: height)
-            button.frame = frame
-
-            secondRowStackView.addArrangedSubview(button)
-            letterButtons.append(button)
-        }
-
-        let thirdRowStackView = UIStackView()
-        thirdRowStackView.axis = .horizontal
-        thirdRowStackView.distribution = .equalSpacing
-        thirdRowStackView.spacing = 8
-
-        for letter in 14..<21 {
-            let button = UIButton(type: .system)
-            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-            button.setTitle(alphabetList[letter], for: .normal)
-            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
-
-            let frame = CGRect(x: 0, y: 0, width: width, height: height)
-            button.frame = frame
-
-            thirdRowStackView.addArrangedSubview(button)
-            letterButtons.append(button)
-        }
-
-        let fourthRowStackView = UIStackView()
-        let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        fourthRowStackView.axis = .horizontal
-        fourthRowStackView.distribution = .fill
-        fourthRowStackView.spacing = 8
-
-        for letter in 21..<26 {
-            let button = UIButton(type: .system)
-            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-            button.setTitle(alphabetList[letter], for: .normal)
-            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
-
-            let frame = CGRect(x: 0, y: 0, width: width, height: height)
-            button.frame = frame
-
-            fourthRowStackView.addArrangedSubview(button)
-            letterButtons.append(button)
-        }
-
-        fourthRowStackView.addArrangedSubview(spacerView)
+        let firstRowStackView = createLetterRowStackView(for: 0..<7, distribution: .equalSpacing)
+        let secondRowStackView = createLetterRowStackView(for: 7..<14, distribution: .equalSpacing)
+        let thirdRowStackView = createLetterRowStackView(for: 14..<21, distribution: .equalSpacing)
+        let fourthRowStackView = createLetterRowStackView(for: 21..<26, distribution: .fill)
+        // Adds empty view to fourth stack view to line up the letters
+        fourthRowStackView.addArrangedSubview(UIView())
 
         let letterStackView = UIStackView(arrangedSubviews: [
             firstRowStackView,
@@ -289,5 +218,30 @@ extension ViewController {
             containerStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             containerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
+    }
+
+    func createLetterRowStackView(for range: Range<Int>, distribution: UIStackView.Distribution) -> UIStackView {
+        let width = 59
+        let height = 59
+
+        let letterRowStackView = UIStackView()
+        letterRowStackView.axis = .horizontal
+        letterRowStackView.distribution = distribution
+        letterRowStackView.spacing = 8
+
+        for letter in range {
+            let button = UIButton(type: .system)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.setTitle(alphabetList[letter], for: .normal)
+            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+
+            let frame = CGRect(x: 0, y: 0, width: width, height: height)
+            button.frame = frame
+
+            letterRowStackView.addArrangedSubview(button)
+            letterButtons.append(button)
+        }
+
+        return letterRowStackView
     }
 }
