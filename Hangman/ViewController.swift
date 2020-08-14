@@ -22,17 +22,14 @@ class ViewController: UIViewController {
     var descriptionLabel1: UILabel!
     var descriptionLabel2: UILabel!
     var hiddenWordLabel: UILabel!
-    var buttonsView: UIView!
+    var containerStackView: UIStackView!
     var letterButtons = [UIButton]()
 
     let alphabetList = [
-        ["a", "h", "o", ""],
-        ["b", "i", "p", "v"],
-        ["c", "j", "q", "w"],
-        ["d", "k", "r", "x"],
-        ["e", "l", "s", "y"],
-        ["f", "m", "t", "z"],
-        ["g", "n", "u", ""]
+        "a", "b", "c", "d", "e", "f", "g",
+        "h", "i", "j", "k", "l", "m", "n",
+        "o", "p", "q", "r", "s", "t", "u",
+        "v", "w", "x", "y", "z"
     ]
 
     var allWordsFromFile = [String]()
@@ -168,80 +165,129 @@ extension ViewController {
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.text = "Score: 0"
         scoreLabel.font = .boldSystemFont(ofSize: 20)
-        view.addSubview(scoreLabel)
 
         imageView = UIImageView(image: nil)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
 
         descriptionLabel1 = UILabel()
-        descriptionLabel1.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel1.text = "Hidden word"
         descriptionLabel1.font = .boldSystemFont(ofSize: 24)
-        view.addSubview(descriptionLabel1)
 
         hiddenWordLabel = UILabel()
-        hiddenWordLabel.translatesAutoresizingMaskIntoConstraints = false
         hiddenWordLabel.textAlignment = .center
-        view.addSubview(hiddenWordLabel)
 
         descriptionLabel2 = UILabel()
-        descriptionLabel2.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel2.text = "Tap the letters to guess the word"
         descriptionLabel2.textColor = .gray
         descriptionLabel2.font = .boldSystemFont(ofSize: 20)
-        view.addSubview(descriptionLabel2)
 
-        buttonsView = UIView()
-        buttonsView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(buttonsView)
+        let textStackView = UIStackView(arrangedSubviews: [descriptionLabel1, hiddenWordLabel, descriptionLabel2])
+        textStackView.axis = .vertical
+        textStackView.distribution = .fill
+        textStackView.alignment = .center
+        textStackView.spacing = 8
+
+        containerStackView = UIStackView(arrangedSubviews: [scoreLabel, imageView, textStackView])
+        containerStackView.translatesAutoresizingMaskIntoConstraints = false
+        containerStackView.axis = .vertical
+        containerStackView.distribution = .equalSpacing
+        containerStackView.alignment = .center
+        view.addSubview(containerStackView)
 
         let width = 59
         let height = 59
 
-        for row in 0..<7 {
-            for column in 0..<4 {
-                let button = UIButton(type: .system)
-                button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-                button.setTitle(alphabetList[row][column], for: .normal)
-                button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+        let firstRowStackView = UIStackView()
+        firstRowStackView.axis = .horizontal
+        firstRowStackView.distribution = .equalSpacing
+        firstRowStackView.spacing = 8
 
-                let frame = CGRect(x: row * width, y: column * height, width: width, height: height)
-                button.frame = frame
+        for letter in 0..<7 {
+            let button = UIButton(type: .system)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.setTitle(alphabetList[letter], for: .normal)
+            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
 
-                buttonsView.addSubview(button)
-                letterButtons.append(button)
-            }
+            let frame = CGRect(x: 0, y: 0, width: width, height: height)
+            button.frame = frame
+
+            firstRowStackView.addArrangedSubview(button)
+            letterButtons.append(button)
         }
 
-        constrainElements()
-    }
+        let secondRowStackView = UIStackView()
+        secondRowStackView.axis = .horizontal
+        secondRowStackView.distribution = .equalSpacing
+        secondRowStackView.spacing = 8
 
-    func constrainElements() {
-        // FIXME: Layout issues on iPhone SE, iPhone 8, iPhone 8 plus and iPad devices
+        for letter in 7..<14 {
+            let button = UIButton(type: .system)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.setTitle(alphabetList[letter], for: .normal)
+            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+
+            let frame = CGRect(x: 0, y: 0, width: width, height: height)
+            button.frame = frame
+
+            secondRowStackView.addArrangedSubview(button)
+            letterButtons.append(button)
+        }
+
+        let thirdRowStackView = UIStackView()
+        thirdRowStackView.axis = .horizontal
+        thirdRowStackView.distribution = .equalSpacing
+        thirdRowStackView.spacing = 8
+
+        for letter in 14..<21 {
+            let button = UIButton(type: .system)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.setTitle(alphabetList[letter], for: .normal)
+            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+
+            let frame = CGRect(x: 0, y: 0, width: width, height: height)
+            button.frame = frame
+
+            thirdRowStackView.addArrangedSubview(button)
+            letterButtons.append(button)
+        }
+
+        let fourthRowStackView = UIStackView()
+        let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        fourthRowStackView.axis = .horizontal
+        fourthRowStackView.distribution = .fill
+        fourthRowStackView.spacing = 8
+
+        for letter in 21..<26 {
+            let button = UIButton(type: .system)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.setTitle(alphabetList[letter], for: .normal)
+            button.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+
+            let frame = CGRect(x: 0, y: 0, width: width, height: height)
+            button.frame = frame
+
+            fourthRowStackView.addArrangedSubview(button)
+            letterButtons.append(button)
+        }
+
+        fourthRowStackView.addArrangedSubview(spacerView)
+
+        let letterStackView = UIStackView(arrangedSubviews: [
+            firstRowStackView,
+            secondRowStackView,
+            thirdRowStackView,
+            fourthRowStackView
+        ])
+        letterStackView.axis = .vertical
+        containerStackView.addArrangedSubview(letterStackView)
 
         NSLayoutConstraint.activate([
-            scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            imageView.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 50),
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 120),
             imageView.heightAnchor.constraint(equalToConstant: 200),
-
-            descriptionLabel1.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 80),
-            descriptionLabel1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            hiddenWordLabel.topAnchor.constraint(equalTo: descriptionLabel1.bottomAnchor, constant: 20),
-            hiddenWordLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            hiddenWordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            descriptionLabel2.topAnchor.constraint(equalTo: hiddenWordLabel.bottomAnchor, constant: 100),
-            descriptionLabel2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            buttonsView.topAnchor.constraint(equalTo: descriptionLabel2.bottomAnchor, constant: 20),
-            buttonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            buttonsView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
+            containerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            containerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            containerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
 }
